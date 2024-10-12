@@ -1,5 +1,4 @@
-#[derive(Debug)]
-#[derive(Clone)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone)]
 pub enum TokenType {
   // Single-character tokens.
   LPAREN, RPAREN, LBRACE, RBRACE,
@@ -15,14 +14,13 @@ pub enum TokenType {
   IDENTIFIER, STRING, NUMBER,
 
   // Keywords.
-  AND, CLASS, ELSE, FALSE, FUN, FOR, IF, NIL, OR,
-  PRINT, RETURN, SUPER, THIS, TRUE, LET, WHILE,
+  AND, CLASS, ELSE, FALSE, FUNC, FOR, IF, NIL, OR,
+  PRINT, RETURN, SUPER, SELF, TRUE, LET, WHILE,
 
   EOF
 }
 
-#[derive(Debug)]
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct Token {
     pub token_type: TokenType,
     pub lexeme: String,
@@ -43,4 +41,4 @@ impl Token {
     pub fn to_string(&self) -> String {
         format!("{:?} {} {:?}", self.token_type, self.lexeme, self.literal)
     }
-}
+  
