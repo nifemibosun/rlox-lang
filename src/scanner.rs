@@ -117,8 +117,8 @@ impl Scanner {
             _ => {
                 if Scanner::is_digit(c) {
                     self.number()
-                } else if self.is_alpha(c) {
-                    self.identifier()
+                } else if Scanner::is_alpha(c) {
+                    Scanner::identifier()
                 }else {
                     Lox::error(self.line, "Unexpected character")
                 }
@@ -127,12 +127,12 @@ impl Scanner {
     }
 
     fn identifier() {
-        while is_alpha_numeric(self.peek()) {
-            self.advance();
+        while Scanner::is_alpha_numeric(self.peek()) {
+            Scanner::advance();
         }
         let text = &self.source[self.start..self.current];
-        let token_type = self.keywords.get(text).unwrap_or(&TokenType::Identifier);
-        add_token(token_type.clone());
+        let token_type = Scanner::keywords.get(text).unwrap_or(&TokenType::Identifier);
+        self.add_token(token_type.clone());
     }
 
     fn number(&self) {
@@ -148,7 +148,7 @@ impl Scanner {
             }
         }
 
-        self.add_token(TokenType::Number, 
+        self.add_token_literal(TokenType::Number, 
     self.source[self.start..self.current].parse::<f64>().ok());
     }
 

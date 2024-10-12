@@ -41,4 +41,4 @@ impl Token {
     pub fn to_string(&self) -> String {
         format!("{:?} {} {:?}", self.token_type, self.lexeme, self.literal)
     }
-  
+}

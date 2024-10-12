@@ -25,7 +25,7 @@ impl Lox {
         Ok(())
     }
 
-    pub fn run_prompt(&self) -> io::Result<()> {
+    pub fn run_prompt() -> io::Result<()> {
         let stdin = io::stdin();
         let mut reader = stdin.lock();
         let mut lox = Lox::default();
@@ -60,5 +60,6 @@ impl Lox {
 
     fn report(line: usize, position: &str, message: &str) {
         eprintln!("[line {}] Error {}: {}", line, position, message);
+    }
 }
   
