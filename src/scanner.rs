@@ -1,4 +1,5 @@
-use crate::lexer::tokens::{Token, TokenType};
+use crate::src::lox::Lox;
+use crate::src::tokens::{Token, TokenType};
 
 pub struct Scanner {
     source: String,
@@ -17,7 +18,6 @@ impl Scanner {
             start: 0,
             current: 0,
             line: 1,
-            errors: Vec::new(),
         }
     }
 
@@ -100,7 +100,7 @@ impl Scanner {
                 } else if self.is_alpha(c) {
                     self.identifier();
                 } else {
-                    self.error(&format!("Unexpected character: {}", c));
+                    Lox.error(&format!("Unexpected character: {}", c));
                 }
             }
         }
@@ -140,10 +140,6 @@ impl Scanner {
 
     fn is_alpha_numeric(c: char) {
         return self.is_alpha(c) || self.is_digit(c);
-    }
-    
-    fn error(&mut self, message: &str) {
-        self.errors.push(format!("Line {}: {}", self.line, message));
     }
     
     fn single_line_comment(&mut self) {
