@@ -1,21 +1,22 @@
 #[derive(Debug, PartialEq, Eq, Hash, Clone)]
+
 pub enum TokenType {
   // Single-character tokens.
-  LPAREN, RPAREN, LBRACE, RBRACE,
-  COMMA, DOT, MINUS, PLUS, SEMICOLON, SLASH, STAR,
+  LParen, RParen, LBrace, RBrace,
+  Comma, Dot, Minus, Plus, SemiColon, Slash, Star,
 
   // One or two character tokens.
-  BANG, BANGEQUAL,
-  EQUAL, EQUALEQUAL,
-  GREATER, GREATEREQUAL,
-  LESS, LESSEQUAL,
+  Bang, BangEqual,
+  Equal, EqualEqual,
+  Greater, GreaterEqual,
+  Less, LessEqual,
 
   // Literals.
-  IDENTIFIER, STRING, NUMBER,
+  Identifier, String, Number,
 
   // Keywords.
-  AND, CLASS, ELSE, FALSE, FUNC, FOR, IF, NIL, OR,
-  PRINT, RETURN, SUPER, SELF, TRUE, LET, WHILE,
+  And, Class, Else, False, Func, For, If, Nil, Or,
+  Print, Return, Super, Self, True, Let, While,
 
   EOF
 }
