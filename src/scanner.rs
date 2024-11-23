@@ -7,7 +7,6 @@ pub struct Scanner {
     start: usize,
     current: usize,
     line: usize,
-    errors: Vec<String>,
 }
 
 impl Scanner {
@@ -100,7 +99,7 @@ impl Scanner {
                 } else if self.is_alpha(c) {
                     self.identifier();
                 } else {
-                    Lox.error(&format!("Unexpected character: {}", c));
+                    Lox::error(self.line, &format!("Unexpected character: {}", c));
                 }
             }
         }
