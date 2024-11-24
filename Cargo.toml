@@ -1,5 +1,5 @@
 [package]
-name = "my-project"
+name = "rlox-lang"
 version = "0.1.0"
 authors = ["runner"]
 edition = "2021"

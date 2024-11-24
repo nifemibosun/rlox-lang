@@ -1,3 +1,4 @@
+#![allow(unused)]
 #[derive(Debug, PartialEq, Eq, Hash, Clone)]
 
 pub enum TokenType {
@@ -16,7 +17,7 @@ pub enum TokenType {
 
   // Keywords.
   And, Class, Else, False, Func, For, If, Nil, Or,
-  Print, Return, Super, Self, True, Let, While,
+  Print, Return, Super, This, True, Let, Const, While,
 
   EOF
 }
@@ -30,12 +31,12 @@ pub struct Token {
 }
 
 impl Token {
-    pub fn new(token_type: TokenType, lexeme: String, literal: Option<String>, line: usize) -> Self {
+    pub fn new(token_type: TokenType, lexeme: String, line: usize, literal: Option<String>) -> Self {
         Token { 
           token_type, 
-          lexeme, 
+          lexeme,
+          line,
           literal, 
-          line 
         }
     }
 
