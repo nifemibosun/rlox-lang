@@ -16,10 +16,10 @@ pub enum TokenType {
   Identifier, String, Number,
 
   // Keywords.
-  And, Class, Else, False, Func, For, If, Nil, Or,
+  And, Class, Else, False, Fun, For, If, Nil, Or,
   Print, Return, Super, This, True, Let, Const, While,
 
-  EOF
+  EOF // End Of File
 }
 
 #[derive(Debug, Clone)]

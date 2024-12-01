@@ -217,7 +217,7 @@ impl Scanner {
             "class" => TokenType::Class,
             "else" => TokenType::Else,
             "false" => TokenType::False,
-            "func" => TokenType:: Func,
+            "fun" => TokenType:: Fun,
             "for" => TokenType::For,
             "if" => TokenType::If,
             "nil" => TokenType::Nil,
