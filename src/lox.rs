@@ -1,46 +1,62 @@
 use crate::scanner::Scanner;
+use crate::tokens::{ Token, TokenType };
 
 use std::fs;
+use std::io::{BufRead, Write, stdin, stdout, Result, Error, ErrorKind};
 use std::process;
-use std::io::{self, BufRead, Write};
 use std::path::Path;
 
+#[derive(Debug, Clone)]
 pub struct Lox {
     has_error: bool,
 }
 
 impl Lox {
-    fn default() -> Self {
-        Lox { has_error: false }
+    pub fn new() -> Self {
+        Lox { 
+            has_error: false,
+        }
     }
+
+    pub fn run_file(&self, path: &str) -> Result<()> {
+        if !path.ends_with(".lox") {
+            return Err(Error::new(ErrorKind::InvalidInput, "Error: Only files with '.Lox' extension are supported."));
+        }
     
-    pub fn run_file(path: &str) -> io::Result<()> {
-        let lox = Lox::default();
-        let bytes = fs::read(Path::new(path))?;
-        let content = String::from_utf8(bytes).expect("Failed to parse bytes");
+        let bytes  = fs::read(Path::new(path))?;
+        let content = String::from_utf8(bytes).map_err(|_| {
+            Error::new(ErrorKind::InvalidData, "Failed to parse bytes into a valid UTF-8 string")
+        })?;
+    
         Lox::run(content);
-        if lox.has_error {
+    
+        if self.has_error {
             process::exit(65);
         }
+    
         Ok(())
     }
 
-    pub fn run_prompt() -> io::Result<()> {
-        let stdin = io::stdin();
+    pub fn run_prompt(&mut self) -> Result<()> {
+        let stdin = stdin();
         let mut reader = stdin.lock();
-        let mut lox = Lox::default();
+    
         loop {
             print!("> ");
-            io::stdout().flush()?;
+            stdout().flush()?;
+    
             let mut line = String::new();
             let bytes_read = reader.read_line(&mut line)?;
             if bytes_read == 0 {
                 break;
             }
-            Lox::run(line.trim().to_string());
-            lox.has_error = false;
+    
+            let trimmed_line = line.trim();
+            if !trimmed_line.is_empty() {
+                Lox::run(trimmed_line.to_string());
+            }
+            self.has_error = false;
         }
-
         Ok(())
     }
 
@@ -48,18 +64,27 @@ impl Lox {
         let mut scanner = Scanner::new(source);
         let tokens = scanner.scan_tokens();
 
-        // For now, just print the tokens.
         for token in tokens {
             println!("{:?}", token);
         }
     }
 
-    pub fn error(line: usize, message: &str) {
-        Lox::report(line, "", message);
-    }
+    // pub fn error(line: usize, message: &str) {
+    //     Lox::report(line, "", message);
+    // }
 
     fn report(line: usize, position: &str, message: &str) {
         eprintln!("[Line {}] Error {}: {}", line, position, message);
     }
+
+    pub fn error(token: Token, message: &str) {
+        if token.token_type == TokenType::EOF {
+            Lox::report(token.line, " at end", message);
+        } else {
+            let position = format!("at {}", token.lexeme);
+            let position_ref: &str = &position;
+
+            Lox::report(token.line, position_ref, message);
+        }
+    }
 }
-  
