@@ -3,6 +3,8 @@ use std::env::args;
 use std::process;
 use std::io::{BufWriter, Write, Result};
 
+pub struct Boy;
+
 pub struct GenerateAst;
 
 impl GenerateAst {
@@ -11,7 +13,7 @@ impl GenerateAst {
         let file = File::create(path)?;
         let mut writer = BufWriter::new(file);
 
-        writeln!(writer, "enum {} {{", base_name)?;
+        writeln!(writer, "enum {} {", base_name)?;
 
         for type_entry in types {
             let class_name = type_entry.split(":")[0].trim();
@@ -19,15 +21,15 @@ impl GenerateAst {
             self.define_type(writer, base_name, class_name, fields);
         }
 
-        writeln!(writer, "}}")?;
+        writeln!(writer, "}")?;
 
         writer.flush()?;
 
         Ok(())
     }
 
-    fn define_type(writer: BufWriter, base_name: &str, class_name: &str, field_list: &str) {
-        writeln!(writer, "struct {} {{" class_name);
+    fn define_type(mut writer: BufWriter, base_name: &str, class_name: &str, field_list: &str) {
+        writeln!(writer, "struct {} extends {" class_name);
         
     }
 }

@@ -1,0 +1,11 @@
+
+fun add(a, b) {
+    let result = a + b;
+
+    return result;
+}
+
+
+fun console.log(s) {
+    print
+}
