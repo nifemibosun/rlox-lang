@@ -31,12 +31,12 @@ pub struct Token {
 }
 
 impl Token {
-    pub fn new(token_type: TokenType, lexeme: String, line: usize, literal: Option<String>) -> Self {
+    pub fn new(token_type: TokenType, lexeme: String, literal: Option<String>, line: usize,) -> Self {
         Token { 
           token_type, 
           lexeme,
-          line,
-          literal, 
+          literal,
+          line, 
         }
     }
 
