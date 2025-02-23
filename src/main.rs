@@ -12,7 +12,7 @@ fn main() {
     let mut lox = Lox::new();
 
     if args.len() > 2 {
-        eprintln!("Usage: lox [filename.lox]");
+        eprintln!("Usage: lox [filename]");
         process::exit(64);
     } else if args.len() == 2 {
         // Run a file
