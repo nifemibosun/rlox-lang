@@ -2,6 +2,7 @@ mod lox;
 mod parser;
 mod scanner;
 mod tokens;
+// mod expr;
 
 use std::env::args;
 use std::process;
